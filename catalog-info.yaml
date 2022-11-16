@@ -1,0 +1,19 @@
+apiVersion: backstage.io/v1alpha1
+kind: Template
+metadata:
+  name: backstage-sample
+  description: An example of a Backstage application.
+  # Example for optional annotations
+   annotations:
+    circleci.com/project-slug: github/dhanu0001/backstage-demo
+    datadoghq.com/dashboard-url: https://p.datadoghq.com/sb/dcafc21c-4ee4-11ec-a604-da7ad0900002-40c4a7dd244bf26002b6b8f2d3591d0a
+    #datadoghq.com/dashboard-url: https://p.datadoghq.com/sb/6dd69ce8-06a0-11ed-ab53-da7ad0900002-1e23bbc02814bcd6ae6cf25e7a93541d
+    #datadoghq.com/dashboard-url: https://app.datadoghq.com/dash/integration/30516/ci-visibility---pipelines-dashboard?from_ts=1658159941286&to_ts=1658246341286&live=true
+    github.com/project-slug: dhanu0001/backstage-demo
+    #jira/project-key: SAKS
+    backstage.io/techdocs-ref: dir:.
+    
+spec:
+  type: service
+  owner: user:dhanu0001
+  lifecycle: experimental

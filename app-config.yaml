@@ -1,0 +1,177 @@
+app:
+  title: Scaffolded Backstage App
+  baseUrl: http://localhost:3000
+
+organization:
+  name: My Company
+
+backend:
+  # Used for enabling authentication, secret is shared by all backend plugins
+  # See https://backstage.io/docs/tutorials/backend-to-backend-auth for
+  # information on the format
+  # auth:
+  #   keys:
+  #     - secret: ${BACKEND_SECRET}
+  baseUrl: http://localhost:7007
+  listen:
+    port: 7007
+    # Uncomment the following host directive to bind to all IPv4 interfaces and
+    # not just the baseUrl hostname.
+    # host: 0.0.0.0
+  csp:
+    connect-src: ["'self'", 'http:', 'https:']
+    # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
+    # Default Helmet Content-Security-Policy values can be removed by setting the key to false
+  cors:
+    origin: http://localhost:3000
+    methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+    credentials: true
+  # This is for local development only, it is not recommended to use this in production
+  # The production database configuration is stored in app-config.production.yaml
+  database:
+    client: better-sqlite3
+    connection: ':memory:'
+
+    #client: pg
+    #connection:
+    #  host: 127.0.0.1
+    #  port: 5432
+    #  user: postgres
+    #  password: secret
+  cache:
+    store: memory
+  # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
+
+integrations:
+  github:
+    - host: github.com
+      # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
+      # about setting up the GitHub integration here: https://backstage.io/docs/getting-started/configuration#setting-up-a-github-integration
+      token: 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
+    ### Example for how to add your GitHub Enterprise instance using the API:
+    # - host: ghe.example.net
+    #   apiBaseUrl: https://ghe.example.net/api/v3
+    #   token: ${GHE_TOKEN}
+
+proxy:
+  '/circleci/api':
+    target: https://circleci.com/api/v1.1
+    headers:
+      Circle-Token: 6ec3d8ea96466468e8f91afc2bec608573672ac8
+
+# Reference documentation http://backstage.io/docs/features/techdocs/configuration
+# Note: After experimenting with basic setup, use CI/CD to generate docs
+# and an external cloud storage when deploying TechDocs for production use-case.
+# https://backstage.io/docs/features/techdocs/how-to-guides#how-to-migrate-from-techdocs-basic-to-recommended-deployment-approach
+techdocs:
+  builder: 'local' # Alternatives - 'external'
+  generator:
+    runIn: 'docker' # Alternatives - 'local'
+  publisher:
+    type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
+
+auth:
+  environment: development
+  providers: 
+    github:
+      development:
+        clientId: fd2aebe881bcef5b6907
+        clientSecret: 02df691062ee53b246ba9e01ab8f1d72efdede41
+
+scaffolder:
+  # see https://backstage.io/docs/features/software-templates/configuration for software template options
+
+catalog:
+  readonly: true
+  import:
+    entityFilename: catalog-info.yaml
+    pullRequestBranchName: backstage-integration
+  rules:
+    - allow: [Component, System, API, Group, User, Template, Location, Resource, Domain]
+  locations:
+    # Local example data, file locations are relative to the backend process, typically `packages/backend`
+    - type: file
+      target: ../../examples/entities.yaml
+
+    # Local example template
+    - type: url
+      target: https://github.com/dhanu0001/SW-Templates/blob/main/scaffolder-templates/github-pages-site/template.yaml
+      rules:
+        - allow: [Template]
+
+  #  - type: url
+  #    target: https://github.com/dhanu0001/SW-Templates/blob/main/scaffolder-templates/create-empty-project/template.yaml
+  #    rules:
+  #      - allow: [Component, System, API, Group, User, Template, Location]
+
+    - type: url
+      target: https://github.com/RoadieHQ/software-templates/blob/main/scaffolder-templates/pull-request-test/template.yaml
+      rules:
+        - allow: [Component, System, API, Group, User, Template, Location]
+
+    - type: url
+      target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/react-ssr-template/template.yaml
+      rules:
+        - allow: [Template]
+
+    - type: url
+      target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/clean-architecture-app/template.yaml
+      rules:
+        - allow: [Template]
+
+    - type: url
+      target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/create-react-app/template.yaml
+      rules:
+        - allow: [Template]
+
+
+  #  - type: url
+  #    target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/docs-template-cookiecutter/template.yaml
+  #    rules:
+  #      - allow: [Template]
+
+    - type: url
+      target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/docs-template/template.yaml
+      rules:
+        - allow: [Template]
+
+  #  - type: url
+  #    target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/rails-demo/template.yaml
+  #    rules:
+  #      - allow: [Template]
+
+    - type: url
+      target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/springboot-grpc-template/template.yaml
+      rules:
+        - allow: [Template]
+
+    - type: url
+      target: https://github.com/awslabs/aws-proton-plugins-for-backstage/blob/main/docs/tutorial-assets/fargate-nginx-template/template.yaml
+      rules:
+        - allow: [Template]
+
+    - type: url
+      target: https://github.com/dhanu0001/backstage-demo/blob/main/catalog-info.yaml
+
+    - type: url
+      target: https://github.com/backstage/demo/blob/master/catalog-info.yaml
+
+    - type: url
+      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-apis.yaml
+
+    
+    # Local example organizational data
+    - type: file
+      target: ../../examples/org.yaml
+      rules:
+        - allow: [User, Group]
+
+    ## Uncomment these lines to add more example data
+    # - type: url
+    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
+
+    ## Uncomment these lines to add an example org
+    # - type: url
+    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
+    #   rules:
+    #     - allow: [User, Group]
