@@ -15,8 +15,8 @@ workflows:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           path: .
           profile-name: default
-          repo: ${repo}
-          region: ${AWS_REGION}
+          repo: fargate-backstage
+          region: us-east-1
           registry-id: AWS_ECR_REGISTRY_ID
           tag: ${CIRCLE_SHA1}
           push-image: true
