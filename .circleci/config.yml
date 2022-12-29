@@ -14,7 +14,7 @@ workflows:
           aws-cli-version: latest
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           path: .
-          profile-name: default
+          # profile-name: default
           repo: fargate-backstage
           region: us-east-1
           registry-id: AWS_ECR_REGISTRY_ID
